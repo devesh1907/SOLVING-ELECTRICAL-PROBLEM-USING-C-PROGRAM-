@@ -1,0 +1,106 @@
+CODE-
+ #include <stdio.h>
+void maxwell(int r2,int r3,int r4,int l3,int w)
+{ int r1,l1,c,d,qf;
+printf("Enter value for R1 AND L1=\n");
+scanf("%d%d",&r1,&l1);
+c=(r2*r3)/r4;
+d=(r2*l3)/r4;
+if(c==r1&&d==l1)
+{
+printf("\nBridge is balanced\n");
+qf=(w*l3)/r3;
+printf("Quality factor= %d\n",qf);
+}
+else
+{
+printf("\nBridge is not balanced\n");
+}
+}
+void maxwellinduc(int r2, int r3,int r4,int c4,int w)
+{
+int r1,l1,c,d,qf;
+printf("Enter value for R1 AND L1=\n");
+scanf("%d%d",&r1,&l1);
+c=(r2*r3)/r4;
+d=c4*r2*r3;
+if(c==r1&&d==l1)
+{
+printf("\nBridge is balanced\n");
+qf=w*c4*r4;
+printf("Quality factor= %d\n",qf);
+}
+else
+{
+printf("\nBridge is not balanced\n");
+}
+}
+void hays(int r2,int r3,int r4,int c4,int w)
+{
+int r1,l1,c,d,qf;
+printf("Enter value for R1 AND L1=\n");
+scanf("%d%d",&r1,&l1);
+c=(r2*r3*r4*(c4*c4)*(w*w))/(1+(w*w)*(c4*c4)*(r4*r4));
+d=(r2*r3*c4)/(1+(w*w)*(c4*c4)*(r4*r4));
+if(c==r1||d==l1)
+{
+printf("\nBridge is balanced\n");
+qf=1/(w*c4*r4);
+printf("Quality factor= %d\n",qf);
+}
+else
+{
+printf("\nBridge is not balanced\n");
+}
+}
+void owen(int r2, int r3,int c4,int c2,int w)
+{
+int r1,l1,c,d,qf;
+printf("Enter value for R1 AND L1=");
+scanf("%d%d",&r1,&l1);
+c=(r2*c4)/c2;
+d=r2*r3*c4;
+if(c==r1&&d==l1)
+{
+printf("\nBridge is balanced\n");
+qf=w*r2*c2;
+printf("Quality factor= %d\n",qf);
+}
+else
+{
+printf("\nBridge is not balanced\n");
+}
+}
+int main()
+{
+// fun_ptr_arr is an array of function pointers
+void (*fun_ptr_arr[])(int,int,int,int,int) = {maxwell,maxwellinduc,hays,owen};
+unsigned int ch;
+int r1,r2,r3,r4,l1,l2,l3,c1,c2,c3,c4,w;
+printf("Enter Choice: \n0 FOR MAXWELL BRIDGE\n1 FOR MAXWELL
+INDUCTANCE BRIDGE\n 2 FOR HAYS BRIDGE"
+"\n 3 FOR OWEN BRIDGE\n");
+scanf("%d", &ch);
+if(ch==0)
+{
+printf("\nEnter value for R2,R3,R4,L3,w=\n");
+scanf("%d%d%d%d%d",&r2,&r3,&r4,&l3,&w);
+(*fun_ptr_arr[ch])(r2,r3,r4,l3,w);
+}
+else if(ch==1)
+{
+printf("\nEnter value for R2,R3,R4,C4,w=\n");
+scanf("%d%d%d%d%d",&r2,&r3,&r4,&c4,&w);
+(*fun_ptr_arr[ch])(r2,r3,r4,c4,w);
+}
+else if(ch==2)
+{
+printf("\nEnter value for R2,R3,R4,C4,w=\n");
+scanf("%d%d%d%d%d",&r2,&r3,&r4,&c4,&w);
+(*fun_ptr_arr[ch])(r2,r3,r4,c4,w);
+}
+else if(ch==3)
+{
+printf("\nEnter value for R2,R3,C4,C2,w=\n");
+scanf("%d%d%d%d%d",&r2,&r3,&c4,&c2,&w);
+(*fun_ptr_arr[ch])(r2,r3,c4,c2,w);
